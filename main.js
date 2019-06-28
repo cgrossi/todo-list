@@ -130,6 +130,9 @@ function addTodo() {
 }
 
 function main() {
+        if (!localStorage.getItem('tasks')) {
+                localStorage.setItem('tasks', '');
+        }
         renderTasks();
         addTodo();
 }
