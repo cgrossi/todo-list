@@ -75,6 +75,7 @@ main {
 .modify {
   display: flex;
   cursor: pointer;
+  color: rgba(55, 55, 55, 0.9);
 }
 
 .modal-container {

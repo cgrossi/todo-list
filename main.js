@@ -1,3 +1,30 @@
+let taskArray = [];
+
+function createLi(task) {
+        const tasks = document.querySelector('.tasks');
+        const li = document.createElement('li');
+        const input = document.createElement('input');
+        const p = document.createElement('p');
+        const div = document.createElement('div');
+        li.classList.add('task');
+        input.setAttribute('type', 'checkbox');
+        input.setAttribute('class', 'checkbox');
+        p.textContent = task;
+        div.setAttribute('class', 'modify');
+        const i = document.createElement('i');
+        const idelete = document.createElement('i');
+        i.setAttribute('class', 'small material-icons edit');
+        i.textContent = 'edit';
+        idelete.setAttribute('class', 'small material-icons delete');
+        idelete.textContent = 'delete';
+        li.appendChild(input);
+        li.appendChild(p);
+        div.appendChild(i);
+        div.appendChild(idelete);
+        li.appendChild(div);
+        tasks.appendChild(li);
+}
+
 function clickCheckbox() {
         const checkboxes = document.querySelectorAll('.checkbox');
         checkboxes.forEach(el => {
@@ -19,8 +46,10 @@ function clickCheckbox() {
 
 function deleteTodo() {
         const deleteButtons = document.querySelectorAll('.delete');
-        deleteButtons.forEach(el => {
+        deleteButtons.forEach((el, index) => {
                 el.addEventListener('click', event => {
+                        taskArray.splice(index, 1);
+                        localStorage.setItem('tasks', JSON.stringify(taskArray));
                         event.target.parentElement.parentElement.outerHTML = '';
                 });
         });
@@ -46,6 +75,25 @@ function editTodo() {
         });
 }
 
+function renderTasks() {
+        const tasks = document.querySelector('.tasks');
+        tasks.innerHTML = '';
+        if (!localStorage.getItem('tasks')) {
+                localStorage.setItem('tasks', JSON.stringify(taskArray));
+        } else {
+                const data = JSON.parse(localStorage.getItem('tasks'));
+                console.log(data);
+                data.forEach(el => {
+                        createLi(el);
+                });
+        }
+
+        clickCheckbox();
+        deleteTodo();
+        editTodo();
+        // addTodo();
+}
+
 function addTodo() {
         const addTask = document.querySelector('.add-task-btn');
         const addModal = document.querySelector('.add-modal-container');
@@ -57,38 +105,28 @@ function addTodo() {
                 addInput.value = '';
         });
         addSubmit.addEventListener('click', event => {
-                const li = document.createElement('li');
-                const input = document.createElement('input');
-                const p = document.createElement('p');
-                const div = document.createElement('div');
-                li.classList.add('task');
-                input.setAttribute('type', 'checkbox');
-                input.setAttribute('class', 'checkbox');
-                p.textContent = addInput.value;
-                div.setAttribute('class', 'modify');
-                const i = document.createElement('i');
-                const idelete = document.createElement('i');
-                i.setAttribute('class', 'small material-icons edit');
-                i.textContent = 'edit';
-                idelete.setAttribute('class', 'small material-icons delete');
-                idelete.textContent = 'delete';
-                li.appendChild(input);
-                li.appendChild(p);
-                div.appendChild(i);
-                div.appendChild(idelete);
-                li.appendChild(div);
-                tasks.appendChild(li);
-                clickCheckbox();
-                deleteTodo();
-                editTodo();
+                // createLi(addInput.value);
+                // clickCheckbox();
+                // deleteTodo();
+                // editTodo();
+
+                if (!localStorage.getItem('tasks')) {
+                        localStorage.setItem('tasks', JSON.stringify(taskArray));
+                } else {
+                        taskArray = [...JSON.parse(localStorage.getItem('tasks'))];
+                        console.log(taskArray);
+                        taskArray.push(addInput.value);
+                        localStorage.setItem('tasks', JSON.stringify(taskArray));
+                }
+
+                console.log(taskArray);
+                renderTasks();
                 addModal.style.display = 'none';
         });
 }
 
 function main() {
-        clickCheckbox();
-        deleteTodo();
-        editTodo();
+        renderTasks();
         addTodo();
 }
 
