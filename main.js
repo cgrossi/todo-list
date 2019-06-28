@@ -75,8 +75,17 @@ function editTodo() {
         });
         editModalSubmit.addEventListener('click', submitEvent => {
                 todoButtons[current].parentElement.previousElementSibling.innerText = editModalInput.value;
+                if (taskArray.length === 0) {
+                        taskArray = [...JSON.parse(localStorage.getItem('tasks'))];
+                        taskArray.splice(current, 1, editModalInput.value);
+                        localStorage.setItem('tasks', JSON.stringify(taskArray));
+                } else {
+                        taskArray.splice(current, 1, editModalInput.value);
+                        localStorage.setItem('tasks', JSON.stringify(taskArray));
+                }
                 editModal.style.display = 'none';
                 editModalInput.value = '';
+
                 submitEvent.stopImmediatePropagation();
         });
 }

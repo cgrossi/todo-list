@@ -7,8 +7,8 @@ Task list app made from scratch using materialize for icons.
 - Filter tasks
 - Search tasks
 - ~~Connect to local storage~~
-- Fix edit task functionality with local storage
+- ~~Fix edit task functionality with local storage~~
 
 ## Bugs
 
-- Edit task doesn't update local storage
+- ~~Edit task doesn't update local storage~~
