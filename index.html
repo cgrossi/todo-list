@@ -20,16 +20,36 @@
   <body>
     <main class="wrapper">
       <h1>To Do List</h1>
-      <div class="tasks">
-        <div class="task">
+      <ul class="tasks">
+        <li class="task">
           <input type="checkbox" name="completed" id="completed" />
           <p>This is the first test task</p>
+          <div class="modify">
+            <i class="small material-icons edit">edit</i>
+            <i class="small material-icons delete">delete</i>
+          </div>
+        </li>
+        <li class="task">
+          <input type="checkbox" name="completed" id="completed" />
+          <p>This is the second test task</p>
+          <div class="modify">
+            <i class="small material-icons edit">edit</i>
+            <i class="small material-icons delete">delete</i>
+          </div>
+        </li>
+        <div class="add-task">
+          <button class="add-task-btn">Add a new task</button>
         </div>
-      </div>
-      <div class="add-task">
-        <button class="add-task-btn">Add a new task</button>
-      </div>
+      </ul>
     </main>
+    <div class="edit-modal-container">
+      <div class="edit-modal">
+        <h2>Edit Task</h2>
+        <input type="text" class="edit-modal-input" />
+        <button class="save">Save Todo</button>
+      </div>
+    </div>
+
     <script src="main.js"></script>
   </body>
 </html>

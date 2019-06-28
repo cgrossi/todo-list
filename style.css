@@ -7,14 +7,17 @@ html,
 body {
   overflow-x: hidden;
   scroll-behavior: smooth;
-  background: #1d222c;
-  color: white;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 body {
   font-family: "Poppins", sans-serif;
   font-size: 16px;
   line-height: 1.7;
+  background: linear-gradient(to bottom right, #49a09d, #5f2c82);
+  color: white;
 }
 
 .wrapper {
@@ -25,27 +28,100 @@ body {
 }
 
 main {
-  background: rgb(143, 123, 123);
   padding-top: 50px;
   padding-bottom: 50px;
 }
 
 main h1 {
   text-align: center;
-  background: purple;
+  background: rgba(0, 0, 0, 0.35);
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
 
 .tasks {
-  background: white;
+  background: rgba(255, 255, 255, 0.35);
   color: #373737;
   padding: 15px;
 }
 
+.add-task-btn {
+  background: rgba(0, 0, 0, 0.4);
+  border: none;
+  border-radius: 200px;
+  display: block;
+  padding: 1rem 2rem;
+  margin: 0 auto;
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
 .task {
-  border: 1px solid #373737;
+  border: 1px solid rgba(0, 0, 0, 0.1);
   padding: 10px 15px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  align-items: center;
+}
+
+.modify {
+  display: flex;
+  cursor: pointer;
+}
+
+.edit-modal-container {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.edit-modal {
+  text-align: center;
+  width: 50vw;
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(73, 160, 157, 0.9);
+  border-radius: 5px;
+  padding: 20px;
+  z-index: 2;
+}
+
+.edit-modal h2 {
+  font-size: 2.25rem;
+}
+
+.edit-modal-input {
+  width: 80%;
+  height: 50px;
+  font-size: 1.5rem;
+  background-color: rgba(255, 255, 255, 0.5);
+  border: none;
+  padding: 15px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.edit-modal button {
+  border: none;
+  background: rgba(0, 0, 0, 0.5);
+  display: block;
+  padding: 1rem 2rem;
+  text-decoration: none;
+  margin: auto;
+  margin-top: 20px;
+  border-radius: 100px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1rem;
+  cursor: pointer;
 }
 
 @media (min-width: 768px) {
