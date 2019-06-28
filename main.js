@@ -48,8 +48,14 @@ function deleteTodo() {
         const deleteButtons = document.querySelectorAll('.delete');
         deleteButtons.forEach((el, index) => {
                 el.addEventListener('click', event => {
-                        taskArray.splice(index, 1);
-                        localStorage.setItem('tasks', JSON.stringify(taskArray));
+                        if (taskArray.length === 0) {
+                                taskArray = [...JSON.parse(localStorage.getItem('tasks'))];
+                                taskArray.splice(index, 1);
+                                localStorage.setItem('tasks', JSON.stringify(taskArray));
+                        } else {
+                                taskArray.splice(index, 1);
+                                localStorage.setItem('tasks', JSON.stringify(taskArray));
+                        }
                         event.target.parentElement.parentElement.outerHTML = '';
                 });
         });
@@ -82,7 +88,6 @@ function renderTasks() {
                 localStorage.setItem('tasks', JSON.stringify(taskArray));
         } else {
                 const data = JSON.parse(localStorage.getItem('tasks'));
-                console.log(data);
                 data.forEach(el => {
                         createLi(el);
                 });
@@ -91,7 +96,6 @@ function renderTasks() {
         clickCheckbox();
         deleteTodo();
         editTodo();
-        // addTodo();
 }
 
 function addTodo() {
@@ -99,27 +103,18 @@ function addTodo() {
         const addModal = document.querySelector('.add-modal-container');
         const addSubmit = document.querySelector('.add-modal .save');
         const addInput = document.querySelector('.add-modal-input');
-        const tasks = document.querySelector('.tasks');
         addTask.addEventListener('click', () => {
                 addModal.style.display = 'block';
                 addInput.value = '';
         });
-        addSubmit.addEventListener('click', event => {
-                // createLi(addInput.value);
-                // clickCheckbox();
-                // deleteTodo();
-                // editTodo();
-
+        addSubmit.addEventListener('click', () => {
                 if (!localStorage.getItem('tasks')) {
                         localStorage.setItem('tasks', JSON.stringify(taskArray));
                 } else {
                         taskArray = [...JSON.parse(localStorage.getItem('tasks'))];
-                        console.log(taskArray);
                         taskArray.push(addInput.value);
                         localStorage.setItem('tasks', JSON.stringify(taskArray));
                 }
-
-                console.log(taskArray);
                 renderTasks();
                 addModal.style.display = 'none';
         });
