@@ -31,15 +31,18 @@ function editTodo() {
         const editModal = document.querySelector('.edit-modal-container');
         const editModalInput = document.querySelector('.edit-modal-input');
         const editModalSubmit = document.querySelector('.edit-modal button');
-        todoButtons.forEach(el => {
+        let current;
+        todoButtons.forEach((el, i) => {
                 el.addEventListener('click', event => {
                         editModal.style.display = 'block';
-                        editModalInput.value = '';
-                        editModalSubmit.addEventListener('click', el => {
-                                editModal.style.display = 'none';
-                                editModalInput.value = '';
-                        });
+                        current = i;
                 });
+        });
+        editModalSubmit.addEventListener('click', submitEvent => {
+                todoButtons[current].parentElement.previousElementSibling.innerText = editModalInput.value;
+                editModal.style.display = 'none';
+                editModalInput.value = '';
+                submitEvent.stopImmediatePropagation();
         });
 }
 
