@@ -1,4 +1,5 @@
 let taskArray = [];
+let filtered = [];
 
 function createLi(task) {
         const tasks = document.querySelector('.tasks');
@@ -48,14 +49,8 @@ function deleteTodo() {
         const deleteButtons = document.querySelectorAll('.delete');
         deleteButtons.forEach((el, index) => {
                 el.addEventListener('click', event => {
-                        if (taskArray.length === 0) {
-                                taskArray = [...JSON.parse(localStorage.getItem('tasks'))];
-                                taskArray.splice(index, 1);
-                                localStorage.setItem('tasks', JSON.stringify(taskArray));
-                        } else {
-                                taskArray.splice(index, 1);
-                                localStorage.setItem('tasks', JSON.stringify(taskArray));
-                        }
+                        taskArray.splice(index, 1);
+                        localStorage.setItem('tasks', JSON.stringify(taskArray));
                         event.target.parentElement.parentElement.outerHTML = '';
                 });
         });
@@ -75,14 +70,8 @@ function editTodo() {
         });
         editModalSubmit.addEventListener('click', submitEvent => {
                 todoButtons[current].parentElement.previousElementSibling.innerText = editModalInput.value;
-                if (taskArray.length === 0) {
-                        taskArray = [...JSON.parse(localStorage.getItem('tasks'))];
-                        taskArray.splice(current, 1, editModalInput.value);
-                        localStorage.setItem('tasks', JSON.stringify(taskArray));
-                } else {
-                        taskArray.splice(current, 1, editModalInput.value);
-                        localStorage.setItem('tasks', JSON.stringify(taskArray));
-                }
+                taskArray.splice(current, 1, editModalInput.value);
+                localStorage.setItem('tasks', JSON.stringify(taskArray));
                 editModal.style.display = 'none';
                 editModalInput.value = '';
 
@@ -93,6 +82,12 @@ function editTodo() {
 function renderTasks() {
         const tasks = document.querySelector('.tasks');
         tasks.innerHTML = '';
+        clickCheckbox();
+        deleteTodo();
+        editTodo();
+}
+
+function getLocalData() {
         if (!localStorage.getItem('tasks')) {
                 localStorage.setItem('tasks', JSON.stringify(taskArray));
         } else {
@@ -101,10 +96,18 @@ function renderTasks() {
                         createLi(el);
                 });
         }
+}
 
-        clickCheckbox();
-        deleteTodo();
-        editTodo();
+function searchTasks() {
+        const searchInput = document.querySelector('#search-input');
+        searchInput.addEventListener('input', () => {
+                const tasks = document.querySelector('.tasks');
+                tasks.innerHTML = '';
+                filtered = taskArray.filter(el => el.includes(`${searchInput.value}`));
+                filtered.forEach(el => {
+                        createLi(el);
+                });
+        });
 }
 
 function addTodo() {
@@ -132,9 +135,13 @@ function addTodo() {
 function main() {
         if (!localStorage.getItem('tasks')) {
                 localStorage.setItem('tasks', '');
+        } else {
+                taskArray = [...JSON.parse(localStorage.getItem('tasks'))];
         }
+        getLocalData();
         renderTasks();
         addTodo();
+        searchTasks();
 }
 
 main();

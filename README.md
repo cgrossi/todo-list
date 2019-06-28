@@ -8,6 +8,8 @@ Task list app made from scratch using materialize for icons.
 - Search tasks
 - ~~Connect to local storage~~
 - ~~Fix edit task functionality with local storage~~
+- Stylize checkbox
+- Add keypress submits
 
 ## Bugs
 
